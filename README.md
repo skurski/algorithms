@@ -1,2 +1,2 @@
 # algorithms
-Solving algorithms
+Solving algorithms for fun
