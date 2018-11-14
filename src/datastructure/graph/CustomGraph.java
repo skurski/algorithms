@@ -6,6 +6,8 @@ import java.util.*;
  * Graph example:
  * http://www.algolist.net/Data_structures/Graph
  * Photo with weighted graph
+ *
+ * https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/
  */
 public class CustomGraph {
 
