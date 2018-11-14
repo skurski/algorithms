@@ -10,25 +10,32 @@ public class IntroInterview {
     /**
      * We have collection of integers, asc order
      * Find pair that sum up to some number
+     *
+     * Simple and O(n2) solution is two loops
+     *
+     * More advanced solution is to use one loop to iterate over collection, this way we have first element of a pair
+     * Then inside loop we use binary search for finding second element of the pair
+     * Complexity is N x LOG(N)
      */
     public static int[] findPair(int[] array, int sum) {
-        return binarySearchPair(array, 0, array.length-1, sum);
+        for (int i = 0; i < array.length-1; i++) {
+            int second = binarySearchForSecondElement(array, i+1, array.length-1, array[i], sum);
+            if (second > -1) return new int[]{i, second};
+        }
+
+        return new int[0];
     }
 
-    public static int[] binarySearchPair(int[] array, int start, int end, int sum) {
-        int[] res = new int[]{};
-        if (start >= end) return res;
-        int middleId = array.length / 2;
-        if (array[middleId] + array[middleId+1] == sum) {
-            return new int[]{middleId, middleId+1};
+    private static int binarySearchForSecondElement(int[] array, int start, int end, int firstOfPair, int sum) {
+        if (start > end) return -1;
+        int middleId = (start + end)  / 2;
+
+        if (array[middleId] + firstOfPair < sum) {
+            middleId = binarySearchForSecondElement(array, middleId+1, end, firstOfPair, sum);
+        } else if (array[middleId] + firstOfPair > sum) {
+            middleId = binarySearchForSecondElement(array, start, middleId-1, firstOfPair, sum);
         }
-        if (array[middleId] + array[middleId+1] < sum) {
-            res = binarySearchPair(array, middleId+1, array.length-1, sum);
-        }
-        if (array[middleId] + array[middleId+1] > sum) {
-            res = binarySearchPair(array, 0, middleId, sum);
-        }
-        return res;
+        return middleId;
     }
 
     public static void main(String[] args) {
