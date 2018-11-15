@@ -61,19 +61,34 @@ public class IntroInterview {
 	 * The same task but array is not sorted
      */
 	 public static int[] findPairInUnsortedArray(int[] array, int sum) {
-		Map<Integer, Integer> lookup = new HashMap<>();
+		Map<Integer, Integer> complements = new HashMap<>();
 		
-		for (int i = 0; i < array.length-1; i++) {
-			int j = i + 1;
-			lookup.put(array[i], i);
-			int rest = sum - array[j];
-			if (lookup.containsKey(rest)) {
-				System.out.println("Founded in lookup, first index: " + lookup.get(rest) + ", second index: " + j);
-				return new int[]{lookup.get(rest), j};
+		for (int i = 0; i < array.length; i++) {
+			if (complements.containsKey(array[i])) {
+				System.out.println("Founded in lookup, first index: " + complements.get(array[i]) + ", second index: " + i);
+				return new int[]{complements.get(array[i]), i};
 			}
+			complements.put(sum - array[i], i);
 		}
 		return new int[0];
 	 }
+	 
+	/**
+	 * Follow up task => find 2 elements that sum up to other element
+	 * O(N2)
+	 */
+	public static boolean hasPairThatSumUp(int[] array) {
+		Set<Integer> sums = new HashSet<>();
+		Set<Integer> comp = new HashSet<>();
+		for (int value : array) {
+			sums.add(value);
+			for (int sum: sums) {
+				comp.add(sum-value);
+			}
+			if (comp.contains(value)) return true;
+		}
+		return false;
+	}
 
     public static void main(String[] args) {
         int[] res = findPair(new int[]{1,2,4,4}, 8);
@@ -85,6 +100,8 @@ public class IntroInterview {
 
         int[] res3 = findPairInUnsortedArray(new int[]{-1,4,2,3,1,4,-2}, 8);
         System.out.println(Arrays.toString(res3));
+		
+		boolean res4 = hasPairThatSumUp(new int[]{10,2,3,-1});
+        System.out.println(res4);
     }
-
 }
