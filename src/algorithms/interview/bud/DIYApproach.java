@@ -20,8 +20,6 @@ public class DIYApproach {
 	 * 	  if 4 next chars (the length of S) are a permutation of S
 	 *
 	 * Perform reverse engineering -> think how your mind resolved it and try to design algorithm
-	 * Solution: put chars from S to set, iterate B and check if char exists in set,
-	 * if exists check if all 4 are the same as in set
 	 *
 	 * TODO: implement
 	 */
