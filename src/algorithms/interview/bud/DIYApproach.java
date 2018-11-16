@@ -21,13 +21,50 @@ public class DIYApproach {
 	 *
 	 * Perform reverse engineering -> think how your mind resolved it and try to design algorithm
 	 *
-	 * TODO: implement
+	 * Solution: Iterate over B, create helper map with string S characters
+	 * 			 Check if B char exists in helper map, if yes create substring from B with length of S
+	 * 			 Check if letters from B substring exists in map -> remove after check to resolve problem with duplicates
+	 * Complexity: O(B * S)
+	 *
+	 * TODO: Optimal solution has O(N) 
 	 */
-	public static void subStringPerm(String s, String b) {
-
+	public static Set<String> subStringPerm(String s, String b) {
+		Set<String> permutations = new HashSet<>();
+		int length = b.length() - s.length();
+		
+		for (int i = 0; i < length; i++) {
+			Map<Integer, Integer> subMap = new HashMap<>();
+			boolean wrong = false;
+			
+			for (int value: s.toCharArray()) {
+				Integer count = subMap.get(value);
+				count = (count == null) ? 1 : ++count;
+				subMap.put(value, count);
+			}
+			
+			Integer bCharAt = (int) b.charAt(i);
+			if (subMap.get(bCharAt) != null) {
+				String subB = b.substring(i,i + s.length());
+				
+				for (int bchar: subB.toCharArray()) {
+					Integer count = subMap.get(bchar);
+					if (count == null || count <= 0) {
+						wrong = true;
+						break;
+					}
+					subMap.put(bchar, --count);
+				}
+				if (!wrong) permutations.add(subB);
+			}
+		}
+		
+		return permutations;
 	}
 
 	public static void main(String[] args) {
-
+		String s = "abbc";
+		String b = "cbabadcbbabbcbabaabccbabc";
+		Set<String> perms = subStringPerm(s, b);
+		System.out.println(perms);
 	}
 }
