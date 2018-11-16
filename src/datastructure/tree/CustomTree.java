@@ -23,6 +23,8 @@ public class CustomTree {
 		traversePreOrder(root);
 		System.out.println("Post order traverse: -------------------");
 		traversePostOrder(root);
+		
+		System.out.println("Max height: " + maxHeight(root));
     }
 	
 	public static void traverseInOrder(Node root) {
@@ -44,6 +46,15 @@ public class CustomTree {
 		traverseInOrder(root.left);
 		traverseInOrder(root.right);
 		System.out.println("Tree value: " + root.value);
+	}
+	
+	public static int maxHeight(Node node) {
+		if (node == null) return 0;
+		int leftHeight = maxHeight(node.left);
+		int rightHeight = maxHeight(node.right);
+		
+		if (leftHeight > rightHeight) return leftHeight + 1;
+		return rightHeight + 1;
 	}
 	
 	private static class Node {
