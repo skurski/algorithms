@@ -28,6 +28,23 @@ public class StringAlgo {
             doPerm(prefix + str.charAt(i), str.substring(0,i) + str.substring(i+1));
         }
     }
+    
+    private static Set<String> perms = new HashSet<>();
+
+    public static void permutation(String text) {
+        permutation(text, "");
+    }
+
+    private static void permutation(String text, String prefix) {
+        if (text.length() == 0) {
+            perms.add(prefix);
+            return;
+        }
+        for (int i = 0; i < text.length(); i++) {
+            String remains = text.substring(0, i) + text.substring(i + 1);
+            permutation(remains, prefix + text.charAt(i));
+        }
+    }
 
     public static void main(String[] args) {
         findAllPermutations("ABCD");
